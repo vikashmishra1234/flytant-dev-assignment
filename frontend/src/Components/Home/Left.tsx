@@ -7,7 +7,8 @@ import Rigth from './Rigth';
 import { FaArrowLeftLong } from "react-icons/fa6";
 import axios from 'axios';
 import { toast } from 'react-toastify';
-
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Left = () => {
@@ -64,6 +65,7 @@ const Left = () => {
     Back
   </button>
   <Rigth change={change} setChange={setChange} todoId={todoId} title={title} description={description} />
+  <ToastContainer/>
 </div>
 
     </>

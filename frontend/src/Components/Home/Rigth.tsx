@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import ReactQuill from 'react-quill';
+import dynamic from 'next/dynamic';
+
+const ReactQuill = dynamic(() => import('react-quill'), {
+  ssr: false
+});
 import 'react-quill/dist/quill.snow.css';
 import { RiDeleteBinLine } from "react-icons/ri";
 import axios from 'axios';
@@ -16,7 +20,11 @@ interface RigthProps {
 const Rigth: React.FC<RigthProps> = ({ title,todoId,change,setChange, description }) => {
   const [newTitle, setNewTitle] = useState('');
   const [newDescription, setNewDescription] = useState('');
-  
+  const [editorLoaded, setEditorLoaded] = useState(false);
+
+  useEffect(() => {
+    setEditorLoaded(true);
+  }, []);
   useEffect(()=>{
     setNewTitle(title)
     setNewDescription(description)
@@ -70,10 +78,10 @@ const Rigth: React.FC<RigthProps> = ({ title,todoId,change,setChange, descriptio
       <RiDeleteBinLine onClick={deleteTodo} cursor={'pointer'} size={'25px'} />
       </div>
       {/* Editable description using ReactQuill */}
-      <ReactQuill
+      {editorLoaded?<ReactQuill
         value={newDescription}
         onChange={setNewDescription}
-      />
+      />:''}
     </section>
   );
 };
